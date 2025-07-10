@@ -1,0 +1,370 @@
+{
+  "name": "AutomaticProposalGenerator",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "WelcomeForm",
+        "formDescription": "Rellena tus datos para recibir informacion",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombres",
+              "placeholder": "Nombres",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Apellidos",
+              "placeholder": "Apellidos",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Numero de Telefono",
+              "placeholder": "69912345",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Correo Electronico",
+              "fieldType": "email",
+              "placeholder": "nombre@gmail.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Modelo de Interes",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Picanto"
+                  },
+                  {
+                    "option": "Soluto"
+                  },
+                  {
+                    "option": "Sonet"
+                  },
+                  {
+                    "option": "Sektos"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Tipo de Compra",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Contado"
+                  },
+                  {
+                    "option": "Credito Bancario"
+                  },
+                  {
+                    "option": "Retoma de Usado"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Interes",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Compra inmediata"
+                  },
+                  {
+                    "option": "1 a 3 meses"
+                  },
+                  {
+                    "option": "3 meses en adelante"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Precio",
+              "fieldType": "number",
+              "placeholder": "Precio"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "44ca7b32-9b91-403c-ae89-74b0e36acdf4",
+      "name": "On form submission",
+      "webhookId": "82718c47-11be-4c7b-a8a5-462d466dd290"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "93189907-c623-416e-9d94-9273bff810a8",
+              "name": "presentationId",
+              "value": "={{ $json.presentationId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "0fb3c50e-5fc1-4ac0-82ae-46ed40bb68aa",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## AUTOMATIC PROPOSAL GENERATOR",
+        "height": 80,
+        "width": 460,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        260,
+        -200
+      ],
+      "id": "9588a477-501e-433c-afaa-984db442651d",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "replaceText",
+        "presentationId": "1tlfjh9q_CA8jb4m1_aT6t5EXue1lSOoD6Z3e4DwcB_0",
+        "textUi": {
+          "textValues": [
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{TipoDeCompra}}",
+              "replaceText": "={{ $json['Tipo de Compra'] }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{Fecha}}",
+              "replaceText": "={{ $now.toLocaleString() }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{FechaValidez}}",
+              "replaceText": "={{ new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toDateTime(eu).toLocaleString()}}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{Nombre}}",
+              "replaceText": "={{ $json.Nombres +\" \"+ $json.Apellidos }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{telefono}}",
+              "replaceText": "={{ $json['Numero de Telefono'] }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{email}}",
+              "replaceText": "={{ $json['Correo Electronico'] }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{modelo}}",
+              "replaceText": "={{ $json['Modelo de Interes'] }}"
+            },
+            {
+              "pageObjectIds": [
+                "p"
+              ],
+              "text": "{{precio}}",
+              "replaceText": "={{ $json.Precio.toString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSlides",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b5b87498-c195-4830-a5a1-ecc7e3d4eca0",
+      "name": "Replace text in a presentation",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "IsaW035NQSWE7xHi",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.presentationId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "slidesToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "6464539d-bbfa-4658-82cd-d92b5a8d8be0",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "luSeMLAj265niWjj",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json['Correo Electronico'] }}",
+        "subject": "=Cotización Kia {{ $('On form submission').item.json['Modelo de Interes'] }} Cliente: {{ $('On form submission').item.json.Nombres }} {{ $('On form submission').item.json.Apellidos }}",
+        "emailType": "text",
+        "message": "=Hola {{ $('On form submission').item.json.Nombres }}.\n\nTe dejo la cotizacion del Kia {{ $('On form submission').item.json['Modelo de Interes'] }}, con un precio actual de {{ $('On form submission').item.json.Precio }}.\n\nSi tienes alguna pregunta me avisas.\n\nSaludos,\nLuis",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "=data"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "c743a78d-705f-4f37-9a38-bf316302f37e",
+      "name": "Send a message",
+      "webhookId": "9a389d7b-ea56-45fb-a525-cc0d2841fbe5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jZ0TPrXFSFbmMMzU",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Nombres": "Pedro",
+          "Apellidos": "Gomez",
+          "Numero de Telefono": "20202014",
+          "Correo Electronico": "info.lrodriguez@gmail.com",
+          "Modelo de Interes": "Soluto",
+          "Tipo de Compra": "Credito Bancario",
+          "Interes": "Compra inmediata",
+          "Precio": 21990,
+          "submittedAt": "2025-05-22T19:04:05.291-04:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Replace text in a presentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace text in a presentation": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "572910df-7881-4262-9c99-43c7391ebd77",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da3fc428bd3eaeb6f65c4ef9588195ebde010195ca06f268fe49b5cb89d4894a"
+  },
+  "id": "nBEFMk1qDnGmViU0",
+  "tags": []
+}
