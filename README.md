@@ -12,21 +12,6 @@ APIs (REST, webhooks)
 Data Transformation (JSON, CSV, XML)
 Email Automation (SMTP, Gmail API)
 
-📁 Repository Structure
-n8n-automation-portfolio/
-├── README.md
-├── workflows/
-│   ├── document-processing/
-│   │   ├── google-drive-document-processor.json
-│   │   └── README.md
-│   ├── form-automation/
-│   │   ├── form-to-document-generator.json
-│   │   └── README.md
-│   ├── data-integration/
-│   └── email-automation/
-├── screenshots/
-├── documentation/
-└── templates/
 🔧 Featured Workflows
 1. Automated Document Processing & Data Integration
 File: workflows/document-processing/google-drive-document-processor.json
